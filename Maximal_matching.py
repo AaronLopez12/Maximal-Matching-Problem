@@ -5,11 +5,12 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-#random.seed(30)
+random.seed(30)
+np.random.seed(30)
 
 
 #Random graph with N vertices, with probability (0,1) to connect two given vertices
-def generateRandomGraph(N,P):
+def Max_match(N,P):
     G=nx.gnp_random_graph(N,P)
     while (nx.is_connected(G)==False):
         G=nx.gnp_random_graph(N,P)
@@ -48,18 +49,18 @@ def generateRandomGraph(N,P):
     # Print de la solución
     print(Set_aristas)
 
-    return G
+    edge_colors = ['red' if edge in Set_aristas else 'black' for edge in G.edges]
+    pos = nx.spring_layout(G)
+    nx.draw(G, pos, with_labels=True, node_size=500, font_size=10, font_color='black', edge_color=edge_colors, width=2)    
+
+    return G, Set_aristas
     
 
 if __name__ == '__main__':
 
     # Generando una gráfica de 10 nodos con una probabilidad de 0.1 
     # entre las aristas
-    G=generateRandomGraph(10,0.1)
-
-    # Labels del grafico
-    nx.draw(G,with_labels="true")
-
+    G=Max_match(9,0.1)
     plt.show()
 
         
